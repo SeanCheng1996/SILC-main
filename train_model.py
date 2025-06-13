@@ -356,7 +356,7 @@ def get_model():
 
 def get_dataset(split, tokenizer, sample_lv=False):
     assert split in ['train', 'val', 'test'], split
-    dataset = XRayDataset(report_dir="D:/work/projects/SILC-main/preprocess/IU_xray", #todo1
+    dataset = XRayDataset(report_dir=conf['report_dir'],
                           split=split, tokenizer=tokenizer, test=(split == 'test'),
                           n_views=conf['n_views'], seg_caption=conf['SILC'],
                           decorate_sentences=conf['SILC'], paths=None, suffix=conf['data_suffix'],

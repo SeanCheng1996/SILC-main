@@ -27,6 +27,7 @@ from collections import Counter
 from tqdm import tqdm
 import pickle
 
+
 class CompatibleLlamaTokenizer(object):
     def __init__(self, model_name_or_path, max_l=512):
         super().__init__()
@@ -247,10 +248,6 @@ class XRayDataset(CaptionDataset):
     def __len__(self):
         return len(self.report)
 
-    def find_images_for_uid(self, uid,
-                            pattern="D:/work/projects/data/IU_xray/images/images_normalized/{uid}_IM-*.dcm.png"):  # todo1
-        return glob.glob(pattern.format(uid=uid))
-
     def sample_s(self, text):
         # print(text)
         text = text.split()
@@ -352,8 +349,8 @@ if __name__ == '__main__':
     test dataset
     """
     myTokenizer = CompatibleLlamaTokenizer("./tokenizer", max_l=512)
-    split="train"
-    sample_lv=False
+    split = "train"
+    sample_lv = False
     dataset = XRayDataset(report_dir="D:/work/projects/SILC-main/preprocess/IU_xray",  # todo1
                           split=split, tokenizer=myTokenizer, test=(split == 'test'),
                           n_views=2, seg_caption=True,
@@ -362,5 +359,5 @@ if __name__ == '__main__':
                           augment=(split == 'train' and False),
                           image_size=224, image_pad="blank",
                           sample_lv=(sample_lv if sample_lv else (False if split == 'train' else False)))
-    images, target, debug=dataset[0]
+    images, target, debug = dataset[0]
     print(debug)
